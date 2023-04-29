@@ -25,6 +25,13 @@
             <version>3.5.2</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.rainy</groupId>
+            <artifactId>common-utils</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
