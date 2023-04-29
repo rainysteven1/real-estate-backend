@@ -10,6 +10,9 @@ spring:
     url: jdbc:mysql://127.0.0.1:13306/real_estate?serverTimezone=GMT%2B8
     username: root
     password: 123456
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 mybatis-plus:
   global-config:
     db-config:
