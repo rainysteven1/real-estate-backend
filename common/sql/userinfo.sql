@@ -1,4 +1,4 @@
-CREATE TABLE `userinfo`
+CREATE TABLE `tb_userinfo`
 (
     `id`       INT                 NOT NULL AUTO_INCREMENT COMMENT '用户ID',
     `username` VARCHAR(30)         NOT NULL COMMENT '用户名',

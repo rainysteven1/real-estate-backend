@@ -1,4 +1,4 @@
-CREATE TABLE `second_hand_house`
+CREATE TABLE `tb_second_hand_house`
 (
     `id`          int          NOT NULL AUTO_INCREMENT COMMENT '房产ID',
     `title`       varchar(150) NOT NULL COMMENT '标题',

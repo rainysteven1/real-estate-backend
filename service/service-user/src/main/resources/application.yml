@@ -14,6 +14,8 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       id-type: auto
@@ -22,4 +24,6 @@ mybatis-plus:
       logic-delete-value: 1
       # 逻辑未删除值(默认为0)
       logic-not-delete-value: 0
+      table-prefix: tb_
+  mapper-locations: classpath:mapper/*.xml
 
