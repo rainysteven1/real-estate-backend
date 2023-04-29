@@ -59,6 +59,14 @@ public class Userinfo implements Serializable {
     @TableField(value = "modified", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime modified;
 
+    @ApiModelProperty("是否激活1已激活,0未激活")
+    @TableField("status")
+    private Byte status;
+
+    @ApiModelProperty("校验码 用户传来的code跟我们发送的code一致，则更改状态为“1”来激活用户")
+    @TableField("code")
+    private String code;
+
     @ApiModelProperty("逻辑删除1已删除,0未删除")
     @TableField("deleted")
     @TableLogic

@@ -11,12 +11,14 @@
         <result column="avatar" property="avatar" />
         <result column="created" property="created" />
         <result column="modified" property="modified" />
+        <result column="status" property="status" />
+        <result column="code" property="code" />
         <result column="deleted" property="deleted" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, username, password, mail, avatar, created, modified, deleted
+        id, username, password, mail, avatar, created, modified, status, code, deleted
     </sql>
 
 </mapper>
