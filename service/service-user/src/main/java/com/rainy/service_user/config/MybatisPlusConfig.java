@@ -8,7 +8,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@MapperScan("")
+@MapperScan("com.rainy.service_user.mapper")
 //配置类
 @Configuration
 public class MybatisPlusConfig {

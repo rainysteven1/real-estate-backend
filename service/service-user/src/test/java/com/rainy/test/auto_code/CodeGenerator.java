@@ -64,12 +64,16 @@ public class CodeGenerator {
                             .logicDeleteColumnName("deleted")
                             .columnNaming(NamingStrategy.underline_to_camel)
                             .addTableFills(new Column("created", FieldFill.INSERT))
-                            .addTableFills(new Column("updated", FieldFill.INSERT_UPDATE))
+                            .addTableFills(new Column("modified", FieldFill.INSERT_UPDATE))
                             .idType(IdType.AUTO)
                             // Mapper策略配置
                             .mapperBuilder()
                             .enableBaseResultMap()
                             .enableBaseColumnList()
+                            //Service策略配置
+                            .serviceBuilder()
+                            .formatServiceFileName("%sService")
+                            .formatServiceImplFileName("%sServiceImpl")
                             // Controller策略配置
                             .controllerBuilder()
                             .enableHyphenStyle()
