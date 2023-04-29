@@ -1,0 +1,8 @@
+spring:
+  mail:
+    default-encoding: UTF-8
+    host: smtp.163.com
+    username: 房产平台
+    password: DRQOVKSXVZZLLOTO
+    protocol: smtp
+    from: rainyrealestate@163.com
