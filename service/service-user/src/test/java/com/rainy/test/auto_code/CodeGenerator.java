@@ -24,7 +24,7 @@ public class CodeGenerator {
         String projectPath = System.getProperty("user.dir");
         // 代码输出目录
         String outputDir = projectPath + "/src/main/java";
-        String outputXmlPath = projectPath + "/src/main/resources/mapper";
+        String outputXmlPath = projectPath + "/src/main/resources/mappers";
         System.out.println(outputDir);
 
         FastAutoGenerator.create(dbURL, dbUsername, dbPassword)

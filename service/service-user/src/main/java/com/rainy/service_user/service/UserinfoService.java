@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author rainy
@@ -13,4 +13,20 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserinfoService extends IService<Userinfo> {
 
+    void register(Userinfo userinfo);
+
+    /**
+     * 根据激活码code查询用户，之后再进行修改状态
+     */
+    Userinfo checkCode(String code);
+
+    /**
+     * 激活账户，修改用户状态为“1”
+     */
+    void updateUserStatus(Userinfo userinfo);
+
+    /**
+     * 登录
+     */
+    Userinfo login(Userinfo userinfo);
 }

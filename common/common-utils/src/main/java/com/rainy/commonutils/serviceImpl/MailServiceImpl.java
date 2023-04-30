@@ -2,7 +2,6 @@ package com.rainy.commonutils.serviceImpl;
 
 import com.rainy.commonutils.service.MailService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,8 +17,8 @@ public class MailServiceImpl implements MailService {
 
     private JavaMailSender mailSender;
 
-    @Value("${spring.mail.from}")
-    private String from;
+    //    @Value("${spring.mail.from}")
+    private final String from = "rainyrealestate@163.com";
 
     @Override
     public void sendSimpleMail(String to, String subject, String content) {
