@@ -1,10 +1,10 @@
 package com.rainy.service_user.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.rainy.commonutils.service.MailService;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.rainy.service_user.entity.Userinfo;
-import com.rainy.service_user.exception.CustomException;
 import com.rainy.service_user.mapper.UserinfoMapper;
+import com.rainy.service_user.service.MailService;
 import com.rainy.service_user.service.UserinfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +29,9 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
     @Autowired
     private UserinfoMapper userinfoMapper;
 
+    @Autowired
+    private MailService mailService;
+
     @Override
     public String register(Userinfo userinfo) {
         QueryWrapper<Userinfo> wrapper = new QueryWrapper<>();
@@ -39,17 +42,30 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
         }
         userinfo.setUsername(userinfo.getMail()).setAvatar("");
         userinfoMapper.insert(userinfo);
+        String code = userinfo.getCode();
+        log.warn("code:" + code);
+        // 主题
+        String subject = "来自房产平台的激活邮件";
+        // 上面的激活码发送到用户注册邮箱
+        String context = "<a href=\"http://localhost:8082/api/server_user/checkCode?code=" + code + "\">激活请点击:" + code + "</a>";
+        // 发送激活邮件
+        mailService.sendHtmlMail(userinfo.getMail(), subject, context);
         return "created";
     }
 
     @Override
     public Userinfo checkCode(String code) {
-        return null;
+        QueryWrapper<Userinfo> wrapper = new QueryWrapper<>();
+        wrapper.eq("code", code);
+        Userinfo userinfo = userinfoMapper.selectOne(wrapper);
+        return userinfo;
     }
 
     @Override
-    public void updateUserStatus(Userinfo userinfo) {
-
+    public void updateUserinfoStatus(Userinfo userinfo) {
+        UpdateWrapper<Userinfo> wrapper = new UpdateWrapper<>();
+        wrapper.eq("id", userinfo.getId());
+        userinfoMapper.update(userinfo, wrapper);
     }
 
     @Override

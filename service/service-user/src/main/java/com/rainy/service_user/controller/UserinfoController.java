@@ -50,6 +50,13 @@ public class UserinfoController {
      */
     @GetMapping(value = "/checkCode")
     public String checkCode(String code) {
+        Userinfo userinfo = userinfoService.checkCode(code);
+
+        if (userinfo != null) {
+            userinfo.setStatus(true);
+            userinfo.setCode("");
+            userinfoService.updateUserinfoStatus(userinfo);
+        }
         return "";
     }
 

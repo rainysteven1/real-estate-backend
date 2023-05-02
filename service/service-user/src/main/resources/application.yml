@@ -17,6 +17,12 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  mail:
+    default-encoding: UTF-8
+    host: smtp.163.com
+    username: rainyrealestate@163.com
+    password: HMHKTILCYXILDEMO
+    protocol: smtp
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

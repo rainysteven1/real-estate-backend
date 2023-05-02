@@ -23,7 +23,7 @@ public interface UserinfoService extends IService<Userinfo> {
     /**
      * 激活账户，修改用户状态为“1”
      */
-    void updateUserStatus(Userinfo userinfo);
+    void updateUserinfoStatus(Userinfo userinfo);
 
     /**
      * 登录

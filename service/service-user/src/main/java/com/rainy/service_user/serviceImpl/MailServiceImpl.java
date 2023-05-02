@@ -1,7 +1,8 @@
-package com.rainy.commonutils.serviceImpl;
+package com.rainy.service_user.serviceImpl;
 
-import com.rainy.commonutils.service.MailService;
+import com.rainy.service_user.service.MailService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,11 +16,11 @@ import javax.mail.internet.MimeMessage;
 @Service
 public class MailServiceImpl implements MailService {
 
+    @Autowired
     private JavaMailSender mailSender;
 
-    // TODO 设置value注解
-    // @Value("${spring.mail.from}")
-    private final String from = "rainyrealestate@163.com";
+    @Value("${spring.mail.username}")
+    private String from;
 
     @Override
     public void sendSimpleMail(String to, String subject, String content) {
@@ -29,7 +30,7 @@ public class MailServiceImpl implements MailService {
         message.setSubject(subject);
         message.setText(content);
         mailSender.send(message);
-        log.info("邮件已经发送...");
+        log.info("邮件已经发送至" + to);
     }
 
     @Override
@@ -51,3 +52,4 @@ public class MailServiceImpl implements MailService {
     }
 
 }
+
