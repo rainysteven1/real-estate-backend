@@ -4,14 +4,18 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.rainy.service_user.entity.Userinfo;
 import com.rainy.service_user.mapper.UserinfoMapper;
-import com.rainy.service_user.service.MailService;
 import com.rainy.service_user.service.UserinfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.rainy.service_user.utils.MailUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -30,7 +34,7 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
     private UserinfoMapper userinfoMapper;
 
     @Autowired
-    private MailService mailService;
+    private MailUtil mailUtil;
 
     @Override
     public String register(Userinfo userinfo) {
@@ -44,12 +48,19 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
         userinfoMapper.insert(userinfo);
         String code = userinfo.getCode();
         log.warn("code:" + code);
+
         // 主题
-        String subject = "来自房产平台的激活邮件";
+        String subject = "房产平台的激活邮件";
         // 上面的激活码发送到用户注册邮箱
-        String context = "<a href=\"http://localhost:8082/api/server_user/checkCode?code=" + code + "\">激活请点击:" + code + "</a>";
+        String link = "http://127.0.0.1:8082/api/server_user/checkCode?code=" + code;
+        String mailTemplate = "registerTemplate";
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("mail", userinfo.getMail());
+        dataMap.put("createTime", new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss").format(new Date()));
+        dataMap.put("link", link);
+        log.info(link);
         // 发送激活邮件
-        mailService.sendHtmlMail(userinfo.getMail(), subject, context);
+        mailUtil.sendTemplateMail(userinfo.getMail(), subject, mailTemplate, dataMap);
         return "created";
     }
 
@@ -57,8 +68,7 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
     public Userinfo checkCode(String code) {
         QueryWrapper<Userinfo> wrapper = new QueryWrapper<>();
         wrapper.eq("code", code);
-        Userinfo userinfo = userinfoMapper.selectOne(wrapper);
-        return userinfo;
+        return userinfoMapper.selectOne(wrapper);
     }
 
     @Override

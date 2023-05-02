@@ -1,4 +1,4 @@
-package com.rainy.commonutils.util;
+package com.rainy.commonutils.utils;
 
 import java.util.UUID;
 

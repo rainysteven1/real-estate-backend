@@ -1,18 +1,19 @@
 package com.rainy.service_user.controller;
 
 import com.rainy.commonutils.entity.R;
-import com.rainy.commonutils.util.UUIDUtil;
+import com.rainy.commonutils.utils.UUIDUtil;
 import com.rainy.service_user.entity.Userinfo;
 import com.rainy.service_user.exception.CustomException;
 import com.rainy.service_user.service.UserinfoService;
 import io.swagger.annotations.Api;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rainy.commonutils.util.ResultCode;
+import com.rainy.commonutils.utils.ResultCode;
 
 /**
  * <p>
@@ -49,9 +50,8 @@ public class UserinfoController {
      * 首先根据激活码code查询用户，之后再把状态修改为"1"
      */
     @GetMapping(value = "/checkCode")
-    public String checkCode(String code) {
+    public String checkCode(@Param("code") String code) {
         Userinfo userinfo = userinfoService.checkCode(code);
-
         if (userinfo != null) {
             userinfo.setStatus(true);
             userinfo.setCode("");
