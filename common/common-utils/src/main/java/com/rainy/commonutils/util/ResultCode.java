@@ -10,6 +10,9 @@ public interface ResultCode {
     //返回用户模块没有登录权限状态码
     public static Integer ERROR = 403;
 
+    // 返回用户模块登录异常状态码
+    public static Integer ERROR_USER_LOGIN = 1000;
+
 
     // 返回用户模块注册异常状态码
     public static Integer ERROR_USER_REGISTER = 10001;
