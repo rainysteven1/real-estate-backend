@@ -1,6 +1,6 @@
 package com.rainy.commonutils.entity;
 
-import com.rainy.commonutils.utils.ResultCode;
+import com.rainy.commonutils.constants.ResultCode;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

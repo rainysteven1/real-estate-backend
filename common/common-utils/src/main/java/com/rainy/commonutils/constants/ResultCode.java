@@ -1,4 +1,4 @@
-package com.rainy.commonutils.utils;
+package com.rainy.commonutils.constants;
 
 public interface ResultCode {
     //返回状态成功

@@ -53,7 +53,7 @@ public class CodeGenerator {
                 // 策略配置
                 .strategyConfig(builder ->
                 {
-                    builder.addInclude("tb_userinfo")
+                    builder.addInclude("tb_user")
                             .addTablePrefix("tb_")
                             .enableCapitalMode()
                             // Entity策略配置
