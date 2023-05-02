@@ -28,10 +28,17 @@ public class R {
     }
 
     // 结果返回成功静态方法
-    public static R success() {
+    public static R ok() {
         R r = new R();
         r.setCode(ResultCode.SUCCESS);
         r.setMessage("success");
+        return r;
+    }
+
+    public static R created() {
+        R r = new R();
+        r.setCode(ResultCode.CREATED);
+        r.setMessage("created");
         return r;
     }
 

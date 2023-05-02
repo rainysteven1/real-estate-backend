@@ -17,7 +17,8 @@ public class MailServiceImpl implements MailService {
 
     private JavaMailSender mailSender;
 
-    //    @Value("${spring.mail.from}")
+    // TODO 设置value注解
+    // @Value("${spring.mail.from}")
     private final String from = "rainyrealestate@163.com";
 
     @Override
