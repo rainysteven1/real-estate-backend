@@ -71,7 +71,7 @@
     </div>
     <div class="content">
         <h2>亲爱的用户,您好!</h2>
-        <p>您的邮箱：<b><span th:text="${mail}"></span></b></p>
+        <p>您的邮箱：<b><span th:text="${email}"></span></b></p>
         <p>您注册时的日期：<b><span th:text="${createTime}"></span></b></p>
         <P><b>请在10分钟内完成激活:<a
                 th:href="@{'http://localhost:8080/api/service_user/user/verify?key='+${key}}">点我激活</a></b></P>

@@ -65,6 +65,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("email", account.getEmail());
+        wrapper.eq("deleted", false);
         List<User> userList = userMapper.selectList(wrapper);
         if (userList.size() != 0) {
             throw new CustomException(ResultCode.ERROR_USER_REGISTER, "邮箱已存在");

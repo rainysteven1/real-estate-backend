@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: service-user
+  cache:
+    type: caffeine
   profiles:
     active: dev
   datasource:
