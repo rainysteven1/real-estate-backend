@@ -11,12 +11,16 @@ import com.rainy.service_user.service.MailService;
 import com.rainy.service_user.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rainy.servicebase.config.MinioProperties;
+import com.rainy.servicebase.service.MinioService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,6 +43,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private MinioService minioService;
 
     private void validate(User account, String confirmPassword) {
         if (StringUtils.isBlank(account.getEmail()) || StringUtils.isBlank(account.getPassword()) ||
@@ -91,6 +98,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public User updateProfile(Integer id, User account, MultipartFile file) {
-
+        try {
+            InputStream inputStream = file.getInputStream();
+            String contentType = file.getContentType();
+            Date date = new Date();
+            String ss = String.valueOf(date.getTime());
+            String fileName = ss.substring(ss.length() - 6) + id;
+            String result = minioService.uploadFile(inputStream, fileName, contentType);
+            log.debug(result);
+        } catch (IOException e) {
+            throw new CustomException(ResultCode.SERVER_ERROR, "上传文件失败");
+        }
+        return account;
     }
 }

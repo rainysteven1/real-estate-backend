@@ -51,7 +51,7 @@ public class UserController {
     public R updateProfile(@PathVariable(value = "id") Integer id, User account
             , @Param(value = "file") MultipartFile file) {
         R msg = R.ok();
-        msg.setData(userService.updateProfile().toMap());
+        msg.setData(userService.updateProfile(id, account, file).toMap());
         return msg;
     }
 }

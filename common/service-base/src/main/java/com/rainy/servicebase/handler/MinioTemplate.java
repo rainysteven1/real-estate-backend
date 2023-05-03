@@ -27,6 +27,7 @@ public class MinioTemplate {
     }
 
     public MinioClient getMinioClient() {
+        System.out.println(minioProperties.getUrl());
         if (minioClient == null) {
             return MinioClient.builder()
                     .endpoint(minioProperties.getUrl())

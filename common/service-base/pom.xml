@@ -25,6 +25,7 @@
             <artifactId>minio</artifactId>
         </dependency>
 
+
         <dependency>
             <groupId>com.rainy</groupId>
             <artifactId>common-utils</artifactId>
