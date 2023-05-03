@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -77,5 +78,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     public void enable(String key) {
         mailService.enable(key);
+    }
+
+    @Override
+    public User showProfile(Integer id) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("id", id);
+        wrapper.eq("deleted", false);
+        List<User> userList = userMapper.selectList(wrapper);
+        return userList.get(0);
+    }
+
+    @Override
+    public User updateProfile(Integer id, User account, MultipartFile file) {
+
     }
 }

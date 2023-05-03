@@ -1,5 +1,6 @@
-package com.rainy.servicebase.config;
+package com.rainy.servicebase.handler;
 
+import com.rainy.servicebase.config.MinioProperties;
 import io.minio.*;
 import io.minio.errors.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 @Configuration
-@EnableConfigurationProperties(MinioProperties.class)
+@EnableConfigurationProperties(com.rainy.servicebase.config.MinioProperties.class)
 public class MinioTemplate {
     @Autowired
     private MinioProperties minioProperties;

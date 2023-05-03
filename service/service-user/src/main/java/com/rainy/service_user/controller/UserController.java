@@ -7,12 +7,10 @@ import com.rainy.service_user.service.UserService;
 import io.swagger.annotations.Api;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.rainy.commonutils.constants.ResultCode;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
@@ -39,5 +37,21 @@ public class UserController {
     public R verify(@Param(value = "key") String key) {
         userService.enable(key);
         return R.ok();
+    }
+
+
+    @GetMapping("/profile/{id}")
+    public R getProfile(@PathVariable(value = "id") Integer id) {
+        R msg = R.ok();
+        msg.setData(userService.showProfile(id).toMap());
+        return msg;
+    }
+
+    @PutMapping("/profile/{id}")
+    public R updateProfile(@PathVariable(value = "id") Integer id, User account
+            , @Param(value = "file") MultipartFile file) {
+        R msg = R.ok();
+        msg.setData(userService.updateProfile().toMap());
+        return msg;
     }
 }

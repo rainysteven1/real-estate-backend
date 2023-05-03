@@ -1,6 +1,6 @@
 package com.rainy.servicebase.serviceImpl;
 
-import com.rainy.servicebase.config.MinioTemplate;
+import com.rainy.servicebase.handler.MinioTemplate;
 import com.rainy.servicebase.service.MinioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +15,7 @@ public class MinioServiceImpl implements MinioService {
     @Autowired
     private MinioTemplate minioTemplate;
 
-    @Value("${minio.bucketName}")
-    private String bucketName;
+    private final String bucketName = "images";
 
     /**
      * 获取文件外链

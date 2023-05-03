@@ -10,6 +10,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -79,5 +81,14 @@ public class User implements Serializable {
     @TableLogic
     private Boolean deleted;
 
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("username", name);
+        resultMap.put("about", about);
+        resultMap.put("email", email);
+        resultMap.put("avatar", avatar);
+        return resultMap;
+    }
 
 }
