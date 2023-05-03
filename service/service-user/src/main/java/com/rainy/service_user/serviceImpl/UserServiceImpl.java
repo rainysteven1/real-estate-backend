@@ -10,6 +10,7 @@ import com.rainy.service_user.mapper.UserMapper;
 import com.rainy.service_user.service.MailService;
 import com.rainy.service_user.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.rainy.servicebase.config.MinioProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
