@@ -23,10 +23,16 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -42,6 +48,9 @@ public class MailServiceImpl implements MailService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private TemplateEngine templateEngine;
 
 
     private final Cache<String, String> registerCache =
@@ -62,14 +71,20 @@ public class MailServiceImpl implements MailService {
                     }).build();
 
 
-    public void sendMail(String to, String subject, String url) {
+    public void sendMail(String to, String subject, String emailTemplate, Map<String, Object> dataMap) {
+        Context context = new Context();
+        for (Map.Entry<String, Object> entry : dataMap.entrySet()) {
+            context.setVariable(entry.getKey(), entry.getValue());//例如:context.setVariable("code",123)
+        }
+        String templateContent = templateEngine.process(emailTemplate, context);
+
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
         try {
             mimeMessageHelper.setFrom(from);
             mimeMessageHelper.setTo(to);
             mimeMessageHelper.setSubject(subject);
-            mimeMessageHelper.setText(url, true);
+            mimeMessageHelper.setText(templateContent, true);
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             e.printStackTrace();
@@ -87,11 +102,14 @@ public class MailServiceImpl implements MailService {
     public void registerNotify(String email) {
         String randomKey = RandomStringUtils.randomAlphabetic(10);
         registerCache.put(randomKey, email);
-        String url = "<a href=\"http://" +
-                "localhost:8080" +
-                "/api/service_user/user/verify?key=" +
-                randomKey + "\">点击超链接即可激活账户</a>";
-        sendMail(email, "房产平台激活邮件", url);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
+        String subject = "房产平台--用户注册";
+        String emailTemplate = "registerTemplate";
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("email", email);
+        dataMap.put("createTime", sdf.format(new Date()));
+        dataMap.put("key", randomKey);
+        sendMail(email, subject, emailTemplate, dataMap);
     }
 
     @Override

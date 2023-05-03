@@ -73,7 +73,8 @@
         <h2>亲爱的用户,您好!</h2>
         <p>您的邮箱：<b><span th:text="${mail}"></span></b></p>
         <p>您注册时的日期：<b><span th:text="${createTime}"></span></b></p>
-        <P><b>请在10分钟内完成激活:<a href="${link}">点我激活</a></b></P>
+        <P><b>请在10分钟内完成激活:<a
+                th:href="@{'http://localhost:8080/api/service_user/user/verify?key='+${key}}">点我激活</a></b></P>
         <p></p>
         <p>当您在使用本网站时，务必要遵守法律法规</p>
         <p>如果您有什么疑问可以联系管理员Rainy，Email: <b>rainysteven1@gmail.com</b></p>

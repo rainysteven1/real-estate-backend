@@ -12,6 +12,7 @@ import com.rainy.service_user.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +27,10 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+
+    // 默认头像地址
+    @Value("${minio.basic_avatar}")
+    private String basic_avatar;
 
     @Autowired
     private UserMapper userMapper;
@@ -56,8 +61,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public void addAccount(User account, String confirmPassword) {
         validate(account, confirmPassword);
         account.setPassword(HashUtil.encryPassword(account.getPassword()));
-        account.setName(account.getEmail()).setAvatar("");
-
+        account.setName(account.getEmail()).setAvatar(basic_avatar);
 
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("email", account.getEmail());

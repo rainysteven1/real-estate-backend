@@ -36,4 +36,6 @@ mybatis-plus:
       logic-not-delete-value: 0
       table-prefix: tb_
   mapper-locations: classpath:mappers/*.xml
+minio:
+  basic_avatar: http://localhost:9000/images/basic_avatar.jpg
 
