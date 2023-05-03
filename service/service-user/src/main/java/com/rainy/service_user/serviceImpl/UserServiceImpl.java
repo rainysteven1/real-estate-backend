@@ -7,6 +7,7 @@ import com.rainy.commonutils.utils.HashUtil;
 import com.rainy.service_user.entity.User;
 import com.rainy.service_user.exception.CustomException;
 import com.rainy.service_user.mapper.UserMapper;
+import com.rainy.service_user.service.MailService;
 import com.rainy.service_user.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -29,6 +30,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private MailService mailService;
+
     private void validate(User account, String confirmPassword) {
         if (StringUtils.isBlank(account.getEmail()) || StringUtils.isBlank(account.getPassword()) ||
                 StringUtils.isBlank(confirmPassword)) {
@@ -47,7 +51,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      *
      * @param account         用户
      * @param confirmPassword 确认密码
-     * @return void
      */
     @Override
     public void addAccount(User account, String confirmPassword) {
@@ -63,6 +66,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new CustomException(ResultCode.ERROR_USER_REGISTER, "邮箱已存在");
         }
         userMapper.insert(account);
+        mailService.registerNotify(account.getEmail());
     }
 
+    public void enable(String key) {
+        mailService.enable(key);
+    }
 }
