@@ -29,10 +29,7 @@ public class UserController {
 
     @PostMapping(value = "/register")
     public R accountRegister(User account, String confirmPassword) {
-        String msg = userService.addAccount(account, confirmPassword);
-        if (!msg.equals("created")) {
-            throw new CustomException(ResultCode.ERROR_USER_REGISTER, msg);
-        }
+        userService.addAccount(account, confirmPassword);
         return R.created();
     }
 }
