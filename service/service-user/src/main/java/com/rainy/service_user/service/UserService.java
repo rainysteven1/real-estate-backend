@@ -17,6 +17,8 @@ public interface UserService extends IService<User> {
 
     void enable(String key);
 
+    String auth(String input, String password);
+
     User showProfile(String id);
 
     User updateProfile(String id, User account, MultipartFile file);

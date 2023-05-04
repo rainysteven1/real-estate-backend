@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import com.rainy.commonutils.constants.ResultCode;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * <p>
  * 前端控制器
@@ -37,6 +40,16 @@ public class UserController {
     public R verify(@Param(value = "key") String key) {
         userService.enable(key);
         return R.ok();
+    }
+
+    @PostMapping("/login")
+    public R login(@Param(value = "input") String input,
+                   @Param(value = "password") String password) {
+        R msg = R.ok();
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("id", userService.auth(input, password));
+        msg.setData(dataMap);
+        return msg;
     }
 
 

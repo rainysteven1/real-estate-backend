@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.rainy.commonutils.constants.ResultCode;
 import com.rainy.commonutils.entity.ResultMsg;
 import com.rainy.commonutils.utils.HashUtil;
+import com.rainy.commonutils.utils.StringUtil;
 import com.rainy.service_user.entity.User;
 import com.rainy.service_user.exception.CustomException;
 import com.rainy.service_user.mapper.UserMapper;
@@ -88,6 +89,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     public void enable(String key) {
         mailService.enable(key);
+    }
+
+    @Override
+    public String auth(String input, String password) {
+        if (StringUtils.isBlank(input) || StringUtils.isBlank(password)) {
+            throw new CustomException(ResultCode.ERROR_USER_LOGIN, "输入的用户名或密码不能为空");
+        }
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("password", HashUtil.encryPassword(password));
+        wrapper.eq(StringUtil.isEmail(input) ? "email" : "name", input);
+        List<User> userList = userMapper.selectList(wrapper);
+        if (userList.size() == 0) {
+            throw new CustomException(ResultCode.ERROR_USER_LOGIN, "输入的用户名或密码错误");
+        }
+        return userList.get(0).getId();
     }
 
     @Override
