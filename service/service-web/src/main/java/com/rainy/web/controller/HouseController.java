@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2023-05-04
  */
 @RestController
-@RequestMapping("/service_house/house")
+@RequestMapping("/api/service_house/house")
 public class HouseController {
 
     @Autowired
