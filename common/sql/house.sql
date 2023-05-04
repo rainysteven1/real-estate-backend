@@ -17,6 +17,7 @@ CREATE TABLE `tb_house`
     `floor`       VARCHAR(10)  NOT NULL COMMENT '楼层',
     `year`        VARCHAR(4) COMMENT '建造日期',
     `house_type`  VARCHAR(10) COMMENT '房产类型',
+    `created`     DATE         NOT NULL COMMENT '创建时间',
     `deleted`     BOOLEAN      NOT NULL DEFAULT (0) COMMENT '逻辑删除1已删除,0未删除',
     PRIMARY KEY (`id`)
 );
@@ -45,6 +46,25 @@ CREATE TABLE `tb_house_agent`
     `id`       BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     `house_id` BIGINT(20)          NOT NULL COMMENT '房屋id',
     `agent_id` BIGINT(20)          NOT NULL COMMENT '经纪机构id',
-    `created`  date                NOT NULL COMMENT '创建时间',
+    `created`  DATE                NOT NULL COMMENT '创建时间',
+    PRIMARY KEY (`id`)
+);
+
+-- ----------------------------
+-- Table structure for comment
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_comment`;
+CREATE TABLE `tb_comment`
+(
+    `id`             BIGINT(20) unsigned NOT NULL AUTO_INCREMENT,
+    `content`        TEXT                NOT NULL COMMENT '评论内容',
+    `created`        DATE                NOT NULL COMMENT '发布时间',
+    `deleted`        BOOLEAN             NOT NULL default (0) COMMENT '逻辑删除1已删除,0未删除',
+    `user_id`        VARCHAR(32)         NOT NULL COMMENT '评论用户id',
+    `user_avatar`    VARCHAR(255)        NOT NULL COMMENT '评论用户头像',
+    `user_name`      VARCHAR(30) COMMENT '评论用户名',
+    `house_id`       BIGINT(20)          NOT NULL COMMENT '房屋id',
+    `parent_id`      BIGINT(20) COMMENT '父评论id',
+    `root_parent_id` BIGINT(20) COMMENT '根评论id',
     PRIMARY KEY (`id`)
 );

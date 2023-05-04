@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rainy.service_house.mapper.CommentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.rainy.service_house.entity.Comment">
+        <id column="id" property="id" />
+        <result column="content" property="content" />
+        <result column="created" property="created" />
+        <result column="user_id" property="userId" />
+        <result column="house_id" property="houseId" />
+        <result column="parent_id" property="parentId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, content, created, user_id, house_id, parent_id
+    </sql>
+
+</mapper>

@@ -3,3 +3,11 @@ minio:
   access-key: root
   secret-key: 12345678
   bucket-name: images
+
+spring:
+  mail:
+    default-encoding: UTF-8
+    host: smtp.163.com
+    username: rainyrealestate@163.com
+    password: HMHKTILCYXILDEMO
+    protocol: smtp

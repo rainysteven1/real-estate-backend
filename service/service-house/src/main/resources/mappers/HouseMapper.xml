@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rainy.service_house.mapper.HouseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.rainy.service_house.entity.House">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="image" property="image" />
+        <result column="detail" property="detail" />
+        <result column="community" property="community" />
+        <result column="street" property="street" />
+        <result column="district" property="district" />
+        <result column="total_price" property="totalPrice" />
+        <result column="unit_price" property="unitPrice" />
+        <result column="room_number" property="roomNumber" />
+        <result column="area" property="area" />
+        <result column="direction" property="direction" />
+        <result column="renovation" property="renovation" />
+        <result column="floor" property="floor" />
+        <result column="year" property="year" />
+        <result column="house_type" property="houseType" />
+        <result column="deleted" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, title, image, detail, community, street, district, total_price, unit_price, room_number, area, direction, renovation, floor, year, house_type, deleted
+    </sql>
+
+</mapper>

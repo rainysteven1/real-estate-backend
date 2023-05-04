@@ -1,0 +1,4 @@
+minio:
+  default-avatar: http://localhost:9000/images/avatars/default.jpg
+  folder: avatars
+
