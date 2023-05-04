@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -97,7 +97,11 @@ public class House implements Serializable {
 
     @ApiModelProperty("创建时间")
     @TableField(value = "created", fill = FieldFill.INSERT)
-    private LocalDate created;
+    private LocalDateTime created;
+
+    @ApiModelProperty("是否上架")
+    @TableField("state")
+    private Boolean state;
 
     @ApiModelProperty("逻辑删除1已删除,0未删除")
     @TableField("deleted")

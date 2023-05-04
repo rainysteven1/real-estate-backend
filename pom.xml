@@ -29,6 +29,9 @@
         <junit.version>4.12</junit.version>
         <minio.version>8.4.3</minio.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
+        <mybatis-plus-core.version>3.5.2</mybatis-plus-core.version>
+        <caffeine.version>2.9.3</caffeine.version>
+        <jedis.version>3.8.0</jedis.version>
     </properties>
 
     <modules>

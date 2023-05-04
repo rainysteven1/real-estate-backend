@@ -20,12 +20,14 @@
         <result column="floor" property="floor" />
         <result column="year" property="year" />
         <result column="house_type" property="houseType" />
+        <result column="created" property="created" />
+        <result column="state" property="state" />
         <result column="deleted" property="deleted" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, title, image, detail, community, street, district, total_price, unit_price, room_number, area, direction, renovation, floor, year, house_type, deleted
+        id, title, image, detail, community, street, district, total_price, unit_price, room_number, area, direction, renovation, floor, year, house_type, created, state, deleted
     </sql>
 
 </mapper>

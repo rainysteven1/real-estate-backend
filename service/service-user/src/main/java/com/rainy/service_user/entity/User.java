@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +63,7 @@ public class User implements Serializable {
 
     @ApiModelProperty("创建时间")
     @TableField(value = "created", fill = FieldFill.INSERT)
-    private Date created;
+    private LocalDateTime created;
 
     @ApiModelProperty("1:普通用户，2:房产经纪人")
     @TableField("type")

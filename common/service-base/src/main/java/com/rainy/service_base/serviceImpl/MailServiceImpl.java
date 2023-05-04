@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -31,6 +32,7 @@ public class MailServiceImpl implements MailService {
     private TemplateEngine templateEngine;
 
 
+    @Async
     public void sendHtmlMail(String to, String subject, String emailTemplate, Map<String, Object> dataMap) {
         Context context = new Context();
         for (Map.Entry<String, Object> entry : dataMap.entrySet()) {

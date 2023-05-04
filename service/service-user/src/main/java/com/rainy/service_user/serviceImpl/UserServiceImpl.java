@@ -22,6 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,8 +49,11 @@ import java.util.concurrent.TimeUnit;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     // 默认头像地址
-    private static final String defaultAvatar = "http://localhost:9000/images/avatars/default.jpg";
-    private static final String folder = "avatars";
+    @Value("${minio.default-avatar}")
+    private String defaultAvatar;
+
+    @Value("${minio.folder}")
+    private String folder;
 
     @Autowired
     private UserMapper userMapper;

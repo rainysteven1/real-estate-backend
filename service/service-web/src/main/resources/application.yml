@@ -6,7 +6,7 @@ spring:
   cache:
     type: caffeine
   profiles:
-    active: base
+    active: base,house,user
     include: base,house,user
   mail:
     default-encoding: UTF-8

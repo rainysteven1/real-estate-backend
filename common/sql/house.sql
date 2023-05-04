@@ -17,7 +17,8 @@ CREATE TABLE `tb_house`
     `floor`       VARCHAR(10)  NOT NULL COMMENT '楼层',
     `year`        VARCHAR(4) COMMENT '建造日期',
     `house_type`  VARCHAR(10) COMMENT '房产类型',
-    `created`     DATE         NOT NULL COMMENT '创建时间',
+    `created`     DATETIME     NOT NULL COMMENT '创建时间',
+    `state`       BOOLEAN      NOT NULL DEFAULT (1) COMMENT '是否上架',
     `deleted`     BOOLEAN      NOT NULL DEFAULT (0) COMMENT '逻辑删除1已删除,0未删除',
     PRIMARY KEY (`id`)
 );
