@@ -14,33 +14,44 @@ import java.io.InputStream;
 public class MinioServiceImpl implements MinioService {
     @Autowired
     private MinioTemplate minioTemplate;
-
+    @Value("${minio.bucket-name}")
     private final String bucketName = "images";
 
     /**
      * 获取文件外链
      *
      * @param objectName 文件名称
-     * @param expires    过期时间 <=7
      * @return url
      */
-    public String getObjectURL(String objectName, int expires) {
+    @Override
+    public String getObjectURL(String objectName, int expiry) {
         try {
-            return minioTemplate.getObjectURL(bucketName, objectName, expires);
+            return minioTemplate.getObjectURL(bucketName, objectName);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public String uploadFile(InputStream inputStream, String fileName, String contentType) {
+
+    public String uploadFile(InputStream inputStream, String fileName, String contentType, String folder) {
         String path = null;
         try {
+            fileName = String.format("%s/%s.%s", folder, fileName, contentType2suffix(contentType));
             minioTemplate.putObject(bucketName, fileName, inputStream, contentType);
-            path = fileName;
+            path = minioTemplate.getObjectURL(bucketName, fileName);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return path;
+    }
+
+    private String contentType2suffix(String contentType) {
+        String suffix = "";
+        switch (contentType) {
+            case "image/jpeg":
+                suffix = "jpg";
+        }
+        return suffix;
     }
 }

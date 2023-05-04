@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS `tb_user`;
 CREATE TABLE `tb_user`
 (
-    `id`        BIGINT(20)   NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+    `id`        VARCHAR(32)  NOT NULL COMMENT '用户ID',
     `name`      VARCHAR(30)  NOT NULL COMMENT '用户名',
     `password`  VARCHAR(50)  NOT NULL COMMENT 'md5加密后的密码',
     `about`     VARCHAR(255)          default '' COMMENT '个人介绍',

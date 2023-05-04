@@ -41,14 +41,14 @@ public class UserController {
 
 
     @GetMapping("/profile/{id}")
-    public R getProfile(@PathVariable(value = "id") Integer id) {
+    public R getProfile(@PathVariable(value = "id") String id) {
         R msg = R.ok();
         msg.setData(userService.showProfile(id).toMap());
         return msg;
     }
 
     @PutMapping("/profile/{id}")
-    public R updateProfile(@PathVariable(value = "id") Integer id, User account
+    public R updateProfile(@PathVariable(value = "id") String id, User account
             , @Param(value = "file") MultipartFile file) {
         R msg = R.ok();
         msg.setData(userService.updateProfile(id, account, file).toMap());

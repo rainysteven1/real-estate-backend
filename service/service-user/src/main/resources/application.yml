@@ -40,9 +40,6 @@ mybatis-plus:
       table-prefix: tb_
   mapper-locations: classpath:mappers/*.xml
 minio:
-  url: 127.0.0.1:9000 #换成自己的minio服务端地址
-  access-key: root
-  secret-key: 12345678
-  bucket-name: images
-  basic_avatar: http://localhost:9000/images/basic_avatar.jpg
+  default-avatar: http://localhost:9000/images/avatars/default.jpg
+  folder: avatars
 

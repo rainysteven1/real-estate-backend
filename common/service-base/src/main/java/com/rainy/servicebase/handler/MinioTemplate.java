@@ -27,7 +27,6 @@ public class MinioTemplate {
     }
 
     public MinioClient getMinioClient() {
-        System.out.println(minioProperties.getUrl());
         if (minioClient == null) {
             return MinioClient.builder()
                     .endpoint(minioProperties.getUrl())
@@ -51,16 +50,20 @@ public class MinioTemplate {
      *
      * @param bucketName bucket 名称
      * @param objectName 文件名称
-     * @param expires    过期时间 <=7
      * @return
      */
-    public String getObjectURL(String bucketName, String objectName, int expires) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+    public String getObjectURL(String bucketName, String objectName, int expiry) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         return getMinioClient().getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
                 .bucket(bucketName)
                 .object(objectName)
-                .expiry(7, TimeUnit.DAYS)
+                .expiry(expiry, TimeUnit.DAYS)
                 .build());
     }
+
+    public String getObjectURL(String bucketName, String path) {
+        return String.format("%s/%s/%s", minioProperties.getUrl(), bucketName, path);
+    }
+
 
     /**
      * 获取文件

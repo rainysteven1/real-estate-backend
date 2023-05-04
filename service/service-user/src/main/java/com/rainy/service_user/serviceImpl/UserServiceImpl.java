@@ -1,6 +1,7 @@
 package com.rainy.service_user.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.rainy.commonutils.constants.ResultCode;
 import com.rainy.commonutils.entity.ResultMsg;
 import com.rainy.commonutils.utils.HashUtil;
@@ -35,8 +36,10 @@ import java.util.List;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     // 默认头像地址
-    @Value("${minio.basic_avatar}")
-    private String basic_avatar;
+    @Value("${minio.default-avatar}")
+    private String defaultAvatar;
+    @Value("${minio.folder}")
+    private String folder;
 
     @Autowired
     private UserMapper userMapper;
@@ -47,7 +50,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private MinioService minioService;
 
-    private void validate(User account, String confirmPassword) {
+    private void registerValidate(User account, String confirmPassword) {
         if (StringUtils.isBlank(account.getEmail()) || StringUtils.isBlank(account.getPassword()) ||
                 StringUtils.isBlank(confirmPassword)) {
             throw new CustomException(ResultCode.ERROR_USER_REGISTER, "输入内容不能为空");
@@ -68,9 +71,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public void addAccount(User account, String confirmPassword) {
-        validate(account, confirmPassword);
+        registerValidate(account, confirmPassword);
         account.setPassword(HashUtil.encryPassword(account.getPassword()));
-        account.setName(account.getEmail()).setAvatar(basic_avatar);
+        account.setName(account.getEmail()).setAvatar(defaultAvatar);
 
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("email", account.getEmail());
@@ -88,7 +91,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public User showProfile(Integer id) {
+    public User showProfile(String id) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("id", id);
         wrapper.eq("deleted", false);
@@ -96,19 +99,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userList.get(0);
     }
 
+
     @Override
-    public User updateProfile(Integer id, User account, MultipartFile file) {
+    public User updateProfile(String id, User account, MultipartFile file) {
+        account.setId(id);
         try {
-            InputStream inputStream = file.getInputStream();
-            String contentType = file.getContentType();
-            Date date = new Date();
-            String ss = String.valueOf(date.getTime());
-            String fileName = ss.substring(ss.length() - 6) + id;
-            String result = minioService.uploadFile(inputStream, fileName, contentType);
-            log.debug(result);
+            if (file != null) {
+                InputStream inputStream = file.getInputStream();
+                String contentType = file.getContentType();
+                account.setAvatar(minioService.uploadFile(inputStream, account.getId(), contentType, folder));
+            }
         } catch (IOException e) {
             throw new CustomException(ResultCode.SERVER_ERROR, "上传文件失败");
         }
+        userMapper.updateById(account);
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("id", id);
+        wrapper.eq("deleted", false);
+        List<User> userList = userMapper.selectList(wrapper);
+        account.setAvatar(userList.get(0).getAvatar());
         return account;
     }
 }

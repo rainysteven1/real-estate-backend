@@ -13,10 +13,13 @@ public interface ResultCode {
     public static Integer SERVER_ERROR = 500;
 
     // 返回用户模块登录异常状态码
-    public static Integer ERROR_USER_LOGIN = 1000;
+    public static Integer ERROR_USER_LOGIN = 10000;
 
 
     // 返回用户模块注册异常状态码
     public static Integer ERROR_USER_REGISTER = 10001;
+
+    // 返回用户模块个人信息异常状态码
+    public static Integer ERROR_USER_PROFILE = 10002;
 
 }
