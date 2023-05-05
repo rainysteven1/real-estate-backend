@@ -37,6 +37,7 @@ public class MinioServiceImpl implements MinioService {
     public String uploadFile(InputStream inputStream, String fileName, String contentType, String folder) {
         String path = null;
         try {
+            System.out.println(fileName);
             fileName = String.format("%s/%s.%s", folder, fileName, contentType2suffix(contentType));
             minioTemplate.putObject(bucketName, fileName, inputStream, contentType);
             path = minioTemplate.getObjectURL(bucketName, fileName);
@@ -50,6 +51,9 @@ public class MinioServiceImpl implements MinioService {
         String suffix = "";
         switch (contentType) {
             case "image/jpeg":
+                suffix = "jpg";
+                break;
+            case "image/jpg":
                 suffix = "jpg";
         }
         return suffix;

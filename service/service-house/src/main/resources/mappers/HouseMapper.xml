@@ -6,7 +6,7 @@
     <resultMap id="BaseResultMap" type="com.rainy.service_house.entity.House">
         <id column="id" property="id" />
         <result column="title" property="title" />
-        <result column="image" property="image" />
+        <result column="preview" property="preview" />
         <result column="detail" property="detail" />
         <result column="community" property="community" />
         <result column="street" property="street" />
@@ -27,7 +27,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, title, image, detail, community, street, district, total_price, unit_price, room_number, area, direction, renovation, floor, year, house_type, created, state, deleted
+        id, title, preview, detail, community, street, district, total_price, unit_price, room_number, area, direction, renovation, floor, year, house_type, created, state, deleted
     </sql>
 
 </mapper>

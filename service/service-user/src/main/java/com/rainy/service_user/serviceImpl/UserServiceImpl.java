@@ -52,7 +52,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Value("${minio.default-avatar}")
     private String defaultAvatar;
 
-    @Value("${minio.folder}")
+    @Value("${minio.user-folder}")
     private String folder;
 
     @Autowired

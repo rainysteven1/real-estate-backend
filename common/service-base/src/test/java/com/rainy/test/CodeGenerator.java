@@ -17,7 +17,7 @@ public class CodeGenerator {
     public void run() {
         String moduleName = "service_house";
         String modulePathName = "service-house";
-        String tableName = "tb_house";
+        String tableName = "tb_house_files";
         // 数据库配置
         String dbURL = "jdbc:mysql://localhost:13306/real_estate?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8";
         String dbUsername = "root";

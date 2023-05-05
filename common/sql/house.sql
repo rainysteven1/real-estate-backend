@@ -3,7 +3,7 @@ CREATE TABLE `tb_house`
 (
     `id`          BIGINT(20)   NOT NULL AUTO_INCREMENT COMMENT '房产ID',
     `title`       VARCHAR(150) NOT NULL COMMENT '标题',
-    `image`       VARCHAR(255) NOT NULL COMMENT '房产照片URL',
+    `preview`     VARCHAR(255) NOT NULL COMMENT '房产照片URL',
     `detail`      VARCHAR(255) NOT NULL COMMENT '房产百科URL',
     `community`   VARCHAR(40)  NOT NULL COMMENT '所属小区名',
     `street`      VARCHAR(20)  NOT NULL COMMENT '所属街道名',
@@ -24,6 +24,22 @@ CREATE TABLE `tb_house`
 );
 
 -- ----------------------------
+-- Table structure for house_files
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_house_files`;
+CREATE TABLE `tb_house_files`
+(
+    `id`       BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `house_id` BIGINT(20)          NOT NULL COMMENT '房屋id',
+    `imageURL` VARCHAR(255)        NOT NULL COMMENT '上传图片存储URL',
+    `type`     TINYINT(1)          NOT NULL COMMENT 'true-房屋图片，false-户型图片',
+    `created`  DATETIME            NOT NULL COMMENT '创建时间',
+    `modified` DATETIME            NOT NULL COMMENT '创建时间',
+    `deleted`  BOOLEAN             NOT NULL DEFAULT (0) COMMENT '逻辑删除1已删除,0未删除',
+    PRIMARY KEY (`id`)
+);
+
+-- ----------------------------
 -- Table structure for house_user
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_house_user`;
@@ -31,9 +47,11 @@ CREATE TABLE `tb_house_user`
 (
     `id`       BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     `house_id` BIGINT(20)          NOT NULL COMMENT '房屋id',
-    `user_id`  BIGINT(20)          NOT NULL COMMENT '用户id',
-    `created`  DATE                NOT NULL COMMENT '创建时间',
-    `type`     TINYINT(1)          NOT NULL COMMENT '1-售卖，2-收藏',
+    `user_id`  VARCHAR(32)         NOT NULL COMMENT '用户id',
+    `type`     TINYINT(1)          NOT NULL COMMENT 'true-售卖，false-收藏',
+    `created`  DATETIME            NOT NULL COMMENT '创建时间',
+    `modified` DATETIME            NOT NULL COMMENT '创建时间',
+    `deleted`  BOOLEAN             NOT NULL DEFAULT (0) COMMENT '逻辑删除1已删除,0未删除',
     PRIMARY KEY (`id`),
     UNIQUE KEY `house_id_user_id_type` (`house_id`, `user_id`, `type`)
 );
@@ -47,7 +65,7 @@ CREATE TABLE `tb_house_agent`
     `id`       BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     `house_id` BIGINT(20)          NOT NULL COMMENT '房屋id',
     `agent_id` BIGINT(20)          NOT NULL COMMENT '经纪机构id',
-    `created`  DATE                NOT NULL COMMENT '创建时间',
+    `created`  DATETIME            NOT NULL COMMENT '创建时间',
     PRIMARY KEY (`id`)
 );
 
@@ -59,7 +77,7 @@ CREATE TABLE `tb_comment`
 (
     `id`             BIGINT(20) unsigned NOT NULL AUTO_INCREMENT,
     `content`        TEXT                NOT NULL COMMENT '评论内容',
-    `created`        DATE                NOT NULL COMMENT '发布时间',
+    `created`        DATETIME               NOT NULL COMMENT '发布时间',
     `deleted`        BOOLEAN             NOT NULL default (0) COMMENT '逻辑删除1已删除,0未删除',
     `user_id`        VARCHAR(32)         NOT NULL COMMENT '评论用户id',
     `user_avatar`    VARCHAR(255)        NOT NULL COMMENT '评论用户头像',

@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -16,7 +18,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author rainy
@@ -40,8 +42,8 @@ public class House implements Serializable {
     private String title;
 
     @ApiModelProperty("房产照片URL")
-    @TableField("image")
-    private String image;
+    @TableField("preview")
+    private String preview;
 
     @ApiModelProperty("房产百科URL")
     @TableField("detail")

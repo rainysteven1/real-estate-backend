@@ -1,2 +1,5 @@
 redis:
   key: hot_house
+
+minio:
+  house-folder: houseFiles

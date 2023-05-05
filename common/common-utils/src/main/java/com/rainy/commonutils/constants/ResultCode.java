@@ -22,4 +22,7 @@ public interface ResultCode {
     // 返回用户模块个人信息异常状态码
     public static Integer ERROR_USER_PROFILE = 10002;
 
+    // 返回房屋模块信息异常状态码
+    public static Integer ERROR_HOUSE_PROFILE = 10003;
+
 }
