@@ -1,6 +1,7 @@
 package com.rainy.service_house.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.commonutils.constants.ResultCode;
@@ -121,5 +122,23 @@ public class HouseServiceImpl extends ServiceImpl<HouseMapper, House> implements
     public IPage<HouseListVO> ownList(HouseUserQuery houseUserQuery) {
         Page<HouseListVO> page = new Page<>(houseUserQuery.getPageNum(), houseUserQuery.getPageSize());
         return houseMapper.listByHouseUserQuery(page, houseUserQuery);
+    }
+
+    @Override
+    public Double updateRating(Long id, Double rating) {
+        QueryWrapper<House> wrapper = new QueryWrapper<>();
+        wrapper.eq("id", id)
+                .eq("state", true)
+                .eq("deleted", false);
+        House house = houseMapper.selectOne(wrapper);
+        if (house == null) {
+            throw new CustomException(ResultCode.ERROR_HOUSE_PROFILE, "该房屋不存在");
+        }
+        Double oldRating = house.getRating();
+        Double newRating = oldRating.equals(0D) ? rating : Math.min((oldRating + rating) / 2, 5);
+        UpdateWrapper<House> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("id", id).set("rating", newRating);
+        houseMapper.update(null, updateWrapper);
+        return newRating;
     }
 }

@@ -28,4 +28,6 @@ public interface HouseService extends IService<House> {
     House houseList(Long id);
 
     IPage<HouseListVO> ownList(HouseUserQuery houseUserQuery);
+
+    Double updateRating(Long id, Double rating);
 }

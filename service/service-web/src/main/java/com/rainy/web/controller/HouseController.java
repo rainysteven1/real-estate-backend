@@ -105,6 +105,18 @@ public class HouseController {
         return ownList(userId, pageSize, pageNum, true);
     }
 
+    // 评分
+    @PatchMapping("/rating/{id}")
+    public R houseRate(@PathVariable(value = "id") Long id,
+                       @Param(value = "rating") Double rating) {
+        R msg = R.ok();
+        Double newRating = houseService.updateRating(id, rating);
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("rating", newRating);
+        msg.setData(dataMap);
+        return msg;
+    }
+
 
 }
 

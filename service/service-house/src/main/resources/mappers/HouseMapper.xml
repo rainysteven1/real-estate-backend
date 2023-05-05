@@ -23,6 +23,7 @@
         <result column="created" property="created"/>
         <result column="state" property="state"/>
         <result column="deleted" property="deleted"/>
+        <result column="rating" property="rating"/>
 
         <collection property="images" ofType="com.rainy.service_house.entity.HouseFiles" javaType="list">
             <id column="hfId" jdbcType="BIGINT" property="id"/>
@@ -41,7 +42,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, title, preview, detail, community, street, district, total_price, unit_price, room_number, area, direction, renovation, floor, year, house_type, created, state, deleted
+        id, title, preview, detail, community, street, district, total_price, unit_price, room_number, area, direction, renovation, floor, year, house_type, created, state, deleted,rating
     </sql>
 
 
@@ -64,6 +65,7 @@
                h.year,
                h.house_type,
                h.created,
+               h.rating,
                hf.id as hfId,
                hf.imageURL,
                hf.type
@@ -80,7 +82,8 @@
         select h.id,
         h.title,
         h.preview,
-        h.created
+        h.created,
+        h.rating
         from tb_house h
         <where>
             <if test="query.community != null and query.community != '' ">
@@ -98,7 +101,8 @@
         select h.id,
         h.title,
         h.preview,
-        h.created
+        h.created,
+        h.rating
         from tb_house h
         left join tb_house_user hu
         on h.id = hu.house_id

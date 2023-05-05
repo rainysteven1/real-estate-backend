@@ -113,6 +113,10 @@ public class House implements Serializable {
     @TableLogic
     private Boolean deleted;
 
-    private List<HouseFiles> images;
+    @ApiModelProperty("评分")
+    @TableField("rating")
+    private Double rating;
+
+//    private List<HouseFiles> images;
 
 }
