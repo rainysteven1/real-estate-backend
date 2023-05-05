@@ -24,7 +24,9 @@
         <result column="state" property="state"/>
         <result column="deleted" property="deleted"/>
         <result column="rating" property="rating"/>
+    </resultMap>
 
+    <resultMap id="BaseResultDetailMap" type="com.rainy.service_house.entity.HouseDetail" extends="BaseResultMap">
         <collection property="images" ofType="com.rainy.service_house.entity.HouseFiles" javaType="list">
             <id column="hfId" jdbcType="BIGINT" property="id"/>
             <result column="imageURL" jdbcType="VARCHAR" property="imageURL"/>
@@ -46,7 +48,7 @@
     </sql>
 
 
-    <select id="listById" resultMap="BaseResultMap"
+    <select id="listById" resultMap="BaseResultDetailMap"
             parameterType="java.lang.Long">
         select h.id,
                h.title,

@@ -117,6 +117,5 @@ public class House implements Serializable {
     @TableField("rating")
     private Double rating;
 
-//    private List<HouseFiles> images;
 
 }
