@@ -106,8 +106,20 @@ public class HouseServiceImpl extends ServiceImpl<HouseMapper, House> implements
     }
 
     @Override
-    public IPage<HouseOwnListVO> ownList(HouseUserQuery houseUserQuery) {
-        Page<House> page = new Page<>(houseUserQuery.getPageNum(), houseUserQuery.getPageSize());
-        return houseMapper.listByPage(page, houseUserQuery);
+    public IPage<HouseListVO> houseList(HouseQuery houseQuery) {
+        Page<HouseListVO> page = new Page<>(houseQuery.getPageSize(), houseQuery.getPageSize());
+        System.out.println(houseMapper.listByHouseQuery(page, houseQuery).getRecords());
+        return houseMapper.listByHouseQuery(page, houseQuery);
+    }
+
+    @Override
+    public House houseList(Long id) {
+        return houseMapper.listById(id);
+    }
+
+    @Override
+    public IPage<HouseListVO> ownList(HouseUserQuery houseUserQuery) {
+        Page<HouseListVO> page = new Page<>(houseUserQuery.getPageNum(), houseUserQuery.getPageSize());
+        return houseMapper.listByHouseUserQuery(page, houseUserQuery);
     }
 }

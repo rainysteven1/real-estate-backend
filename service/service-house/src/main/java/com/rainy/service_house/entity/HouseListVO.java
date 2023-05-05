@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class HouseOwnListVO {
+public class HouseListVO {
     @ApiModelProperty("房产ID")
     private Long id;
 

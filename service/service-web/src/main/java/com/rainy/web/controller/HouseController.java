@@ -2,6 +2,7 @@ package com.rainy.web.controller;
 
 import com.rainy.commonutils.entity.R;
 import com.rainy.service_house.entity.House;
+import com.rainy.service_house.entity.HouseQuery;
 import com.rainy.service_house.entity.HouseUserQuery;
 import com.rainy.service_house.service.HouseService;
 import org.apache.ibatis.annotations.Param;
@@ -50,6 +51,32 @@ public class HouseController {
         return R.created();
     }
 
+
+    @PostMapping("/list")
+    public R houseList(HouseQuery houseQuery,
+                       @Param(value = "pageSize") Integer pageSize,
+                       @Param(value = "pageNum") Integer pageNum) {
+        R msg = R.ok();
+        houseQuery.setPageSize(pageSize).setPageNum(pageNum);
+        houseQuery.setPageSize(pageSize).setPageNum(pageNum);
+        houseQuery.setDeleted(false);
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("data", houseService.houseList(houseQuery));
+        msg.setData(dataMap);
+        return msg;
+    }
+
+
+    @GetMapping("/list/{id}")
+    public R houseList(@PathVariable(value = "id") String id) {
+        R msg = R.ok();
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("data", houseService.houseList(Long.valueOf(id)));
+        msg.setData(dataMap);
+        return msg;
+    }
+
+
     private R ownList(String userId, Integer pageSize, Integer pageNum, Boolean type) {
         R msg = R.ok();
         HouseUserQuery query = HouseUserQuery.builder()
@@ -64,17 +91,17 @@ public class HouseController {
         return msg;
     }
 
-    @GetMapping("/collectList/{userId}")
-    public R collectList(@PathVariable(value = "userId") String userId,
-                         @Param(value = "pageSize") Integer pageSize,
-                         @Param(value = "pageNum") Integer pageNum) {
+    @GetMapping("/ownCollectList/{userId}")
+    public R ownCollectList(@PathVariable(value = "userId") String userId,
+                            @Param(value = "pageSize") Integer pageSize,
+                            @Param(value = "pageNum") Integer pageNum) {
         return ownList(userId, pageSize, pageNum, false);
     }
 
-    @GetMapping("/sellList/{userId}")
-    public R sellList(@PathVariable(value = "userId") String userId,
-                      @Param(value = "pageSize") Integer pageSize,
-                      @Param(value = "pageNum") Integer pageNum) {
+    @GetMapping("/ownSellList/{userId}")
+    public R ownSellList(@PathVariable(value = "userId") String userId,
+                         @Param(value = "pageSize") Integer pageSize,
+                         @Param(value = "pageNum") Integer pageNum) {
         return ownList(userId, pageSize, pageNum, true);
     }
 

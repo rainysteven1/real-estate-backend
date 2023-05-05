@@ -9,6 +9,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -110,5 +113,6 @@ public class House implements Serializable {
     @TableLogic
     private Boolean deleted;
 
+    private List<HouseFiles> images;
 
 }

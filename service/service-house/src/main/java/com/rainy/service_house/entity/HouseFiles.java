@@ -53,7 +53,7 @@ public class HouseFiles implements Serializable {
     @TableField(value = "created", fill = FieldFill.INSERT)
     private LocalDateTime created;
 
-    @ApiModelProperty("创建时间")
+    @ApiModelProperty("修改时间")
     @TableField(value = "modified", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime modified;
 
