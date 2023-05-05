@@ -1,12 +1,12 @@
 package com.rainy.service_house.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.commonutils.constants.ResultCode;
 import com.rainy.commonutils.exception.CustomException;
 import com.rainy.service_base.service.MinioService;
-import com.rainy.service_house.entity.House;
-import com.rainy.service_house.entity.HouseFiles;
-import com.rainy.service_house.entity.HouseUser;
+import com.rainy.service_house.entity.*;
 import com.rainy.service_house.mapper.HouseFilesMapper;
 import com.rainy.service_house.mapper.HouseMapper;
 import com.rainy.service_house.mapper.HouseUserMapper;
@@ -103,5 +103,11 @@ public class HouseServiceImpl extends ServiceImpl<HouseMapper, House> implements
         houseUser.setHouseId(id).setUserId(userId).setType(true);
         houseUserMapper.insert(houseUser);
         houseFilesMapper.insertBatchSomeColumn(houseFilesList);
+    }
+
+    @Override
+    public IPage<HouseOwnListVO> ownList(HouseUserQuery houseUserQuery) {
+        Page<House> page = new Page<>(houseUserQuery.getPageNum(), houseUserQuery.getPageSize());
+        return houseMapper.listByPage(page, houseUserQuery);
     }
 }

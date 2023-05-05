@@ -4,25 +4,33 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.rainy.service_house.entity.House">
-        <id column="id" property="id" />
-        <result column="title" property="title" />
-        <result column="preview" property="preview" />
-        <result column="detail" property="detail" />
-        <result column="community" property="community" />
-        <result column="street" property="street" />
-        <result column="district" property="district" />
-        <result column="total_price" property="totalPrice" />
-        <result column="unit_price" property="unitPrice" />
-        <result column="room_number" property="roomNumber" />
-        <result column="area" property="area" />
-        <result column="direction" property="direction" />
-        <result column="renovation" property="renovation" />
-        <result column="floor" property="floor" />
-        <result column="year" property="year" />
-        <result column="house_type" property="houseType" />
-        <result column="created" property="created" />
-        <result column="state" property="state" />
-        <result column="deleted" property="deleted" />
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="preview" property="preview"/>
+        <result column="detail" property="detail"/>
+        <result column="community" property="community"/>
+        <result column="street" property="street"/>
+        <result column="district" property="district"/>
+        <result column="total_price" property="totalPrice"/>
+        <result column="unit_price" property="unitPrice"/>
+        <result column="room_number" property="roomNumber"/>
+        <result column="area" property="area"/>
+        <result column="direction" property="direction"/>
+        <result column="renovation" property="renovation"/>
+        <result column="floor" property="floor"/>
+        <result column="year" property="year"/>
+        <result column="house_type" property="houseType"/>
+        <result column="created" property="created"/>
+        <result column="state" property="state"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+
+    <!-- 个人房屋列表查询映射结果 -->
+    <resultMap id="HouseOwnListVoResultMap" type="com.rainy.service_house.entity.HouseOwnListVO">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="preview" property="preview"/>
+        <result column="created" property="created"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -30,4 +38,26 @@
         id, title, preview, detail, community, street, district, total_price, unit_price, room_number, area, direction, renovation, floor, year, house_type, created, state, deleted
     </sql>
 
+    <select id="listByPage" resultMap="HouseOwnListVoResultMap"
+            parameterType="com.rainy.service_house.entity.HouseUserQuery">
+        select h.id,
+        h.title,
+        h.preview,
+        h.created
+        from tb_house h
+        left join tb_house_user hu
+        on h.id = hu.house_id
+        <where>
+            <if test="huQuery.type != null">
+                and hu.user_id = #{huQuery.userId,jdbcType=VARCHAR}
+            </if>
+            <if test="huQuery.type != null">
+                and hu.type = #{huQuery.type,jdbcType=TINYINT}
+            </if>
+            <if test="huQuery.deleted != null">
+                and hu.deleted = #{huQuery.deleted,jdbcType=TINYINT}
+                and h.deleted = #{huQuery.deleted,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
 </mapper>

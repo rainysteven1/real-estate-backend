@@ -2,16 +2,16 @@ package com.rainy.web.controller;
 
 import com.rainy.commonutils.entity.R;
 import com.rainy.service_house.entity.House;
+import com.rainy.service_house.entity.HouseUserQuery;
 import com.rainy.service_house.service.HouseService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -41,13 +41,41 @@ public class HouseController {
 //        return R.ok();
 //    }
 
-    @PostMapping("/add")
+    @PostMapping("/sell")
     public R houseAdd(House house,
                       @Param(value = "houseImages") List<MultipartFile> houseImages,
                       @Param(value = "floorPlainImages") List<MultipartFile> floorPlainImages,
-                      @Param(value = "userId") String userID) {
-        houseService.houseAdd(house, houseImages, floorPlainImages, userID);
+                      @Param(value = "userId") String userId) {
+        houseService.houseAdd(house, houseImages, floorPlainImages, userId);
         return R.created();
+    }
+
+    private R ownList(String userId, Integer pageSize, Integer pageNum, Boolean type) {
+        R msg = R.ok();
+        HouseUserQuery query = HouseUserQuery.builder()
+                .type(type)
+                .deleted(false)
+                .userId(userId)
+                .build();
+        query.setPageSize(pageSize).setPageNum(pageNum);
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("data", houseService.ownList(query));
+        msg.setData(dataMap);
+        return msg;
+    }
+
+    @GetMapping("/collectList/{userId}")
+    public R collectList(@PathVariable(value = "userId") String userId,
+                         @Param(value = "pageSize") Integer pageSize,
+                         @Param(value = "pageNum") Integer pageNum) {
+        return ownList(userId, pageSize, pageNum, false);
+    }
+
+    @GetMapping("/sellList/{userId}")
+    public R sellList(@PathVariable(value = "userId") String userId,
+                      @Param(value = "pageSize") Integer pageSize,
+                      @Param(value = "pageNum") Integer pageNum) {
+        return ownList(userId, pageSize, pageNum, true);
     }
 
 
